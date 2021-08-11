@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Mesa Meteorologia</title>
+    <link rel="stylesheet" href="./css/style.css?v=1">
+    <link rel = "icon" href = "./img/logo_blackmesa.png" type = "image/icon type">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header id="cabecalho"> 
+        <h1 id="logo" alt="Logo do Site">
+            BlackMesa<span> Meteorologia</span>
+        </h1>
+
+        <button id="botao_help" alt="Botão de Ajuda">Help</button>
+    </header>
+    <!-- Fim Cabeçalho -->
+
+    <!-- Main -->
+    <main>
+        <section id="entrada_cidade"> <!-- Cidade -->
+            <h1 alt="Cidade">Cidade</h1>
+
+            <div>
+                <input id="txt_cidade" type="text"/>
+                <button id="botao_requisicao" alt="Botão de Verificação">Verificar</button>
+            </div>
+        </section> <!-- Fim Cidade -->
+
+        <section id="dados_clima"> <!-- Dados do Clima -->
+            <h1 id="temp_atual" alt="Temperatura atual">15°</h1>
+
+            <div class="temp_min_max">
+                <h2 id="descricao" alt="Descrição do clima">Descrição</h2>
+                <h2 id="temp_min" alt="Temperatura Mínima">Mínima:</h2>
+                <h2 id="temp_max" alt="Temperatura Máxima">Máxima:</h2>
+            </div>
+            
+            <img id="imagem_clima" src="http://openweathermap.org/img/wn/04d@2x.png" alt="Imagem: descrição visual do clima">
+        </section> <!-- Fim Dados do Clima -->
+        
+        <section id="dados_gerais"> <!-- Dados do Gerais -->
+            <div class="horario_sol">
+                <h2 id="nascer_sol" alt="Horário do Nascer do Sol">Nascer do Sol: </h2>
+                <h2 id="por_sol" alt="Horário do Pôr do Sol">Pôr do Sol: </h2>
+            </div>
+
+            <div class="humidade_vento">
+                <h2 id="humidade" alt="Humidade">Humidade:</h2>
+                <h2 id="vento" alt="Velocidade do Vento">Vento:</h2>
+            </div>
+        </section> <!-- Fim Dados do Gerais -->
+
+        <section id="dados_geograficos"> <!-- Dados do Geográficos -->
+            <div class="coordenadas">
+                <h2 id="latitude" alt="Latitude">Latitude: </h2>
+                <h2 id="longitude" alt="Longitude">Longitude: </h2>
+            </div>
+            
+            <h2 id="distancia_brasilia" alt="Distância da cidade até Brasília">Distância da cidade até Brasília: </h2>
+        </section> <!-- Fim Dados do Geográficos -->
+        <div class="limpar"></div>
+    </main>
+    <!-- Fim Main -->
+
+    <!-- Rodapé -->
+    <footer id="rodape">
+        <h2>Todos os direitos reservados</h2>
+    </footer>
+    <!-- Fim Rodapé -->
+    <script src="./js/script.js"></script>
+</body>
+</html>

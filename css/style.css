@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+body{
+    min-width: 500px;
+    min-height: 700px ;
+    background: #CCC;
+}
+
+main, header, footer {
+    min-width: 500px;
+    min-height: 70px;
+}
+
+/******************************* CABECALHO *******************************/
+
+#cabecalho {
+    width: 100vw;
+    height: 13vh;
+    background: #0080cd;
+    top: 0;
+    padding: 5px 0 0 0;
+}
+
+#logo {
+    margin: 5px 25px;
+    color: #000;
+    font-size: calc(1em + 1.5vw);
+    float: left;
+}
+
+#logo span {
+    color: #FFF;
+}
+
+#cabecalho button {
+    background: none;
+    border-color: #FFF;
+    color: #FFF;
+    font-weight: bold;
+    font-size: calc(1em + 0.5vw);
+    text-decoration: none;
+    padding: 5px 15px;
+    margin: 0 25px;
+    float: right;
+}
+
+#cabecalho button:hover {
+    background: #FFFFFF;
+    color: #0080cd;
+}
+
+#logo, #cabecalho button {
+    position: relative;
+    top: 50%;
+    margin-top: calc(13vh / 2 * -1 / 2);
+}
+
+/******************************* CORPO *******************************/
+#entrada_cidade, #dados_geograficos, #dados_clima, #dados_gerais {
+    min-height: 200px;
+    display: none;
+    height: 30vh;
+    margin: 2vw 0 2vw 2.5vw;
+    border-radius: 20px;
+    background-color: #0080cd;
+    position: relative;
+    float: left;
+}
+
+#entrada_cidade, #dados_geograficos {
+    width: 37.5vw;
+}
+
+#dados_clima, #dados_gerais {
+    width: 55vw;
+}
+
+/******Entrada da Cidade******/
+#entrada_cidade {
+    display: block;
+}
+
+#entrada_cidade div{
+    margin: 0 auto;
+    width: 90%;
+    height: 30%;
+    padding: 2%;
+}
+
+#entrada_cidade h1 {
+    color: #FFF;
+    display: block;
+    text-align: center;
+    font-size: calc(1.1em + 2vw);
+    margin-top: 5vh;
+}
+
+#txt_cidade {
+    width: 70%;
+    height: 75%;
+    font-size: calc(1em + 0.5vw);
+    float: left;
+}
+
+#botao_requisicao {
+    width:25%;
+    height: 80%;
+    background-color: #4E4E4E;
+    color: #FFF;
+    font-size: calc(0.5em + 1vw);
+    float: right;
+}
+
+/******Dados do Clima******/
+#dados_clima {
+    margin-right: 0;
+}
+
+#temp_atual, #dados_clima .temp_min_max, #imagem_clima{
+    height: fit-content;
+    color: #FFF;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#temp_atual {
+    width: 30%;
+    text-align: center;
+    font-size: calc(1em + 8vw);
+    left: 3%;
+}
+
+#imagem_clima {
+    width: 25%;
+    left: 37%;
+}
+
+#dados_clima .temp_min_max {
+    width: fit-content;
+    font-size: calc(0.5em + 0.9vw);
+    left: 65%;
+    text-align: center;
+}
+
+#dados_clima .temp_min_max h2 {
+    margin: 7% 0;
+}
+
+/******Dados Gerais******/
+#dados_gerais .humidade_vento, #dados_gerais .horario_sol {
+    width: 45%;
+    height: 80%;
+    color: #FFF;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: calc(0.5em + 1vw);
+}
+
+#dados_gerais .horario_sol {
+    width: 55%;    
+}
+
+#dados_gerais .humidade_vento {
+    left: 55%;
+    text-align: center;
+}
+
+#dados_gerais h2 {
+    margin-top: 4vh;
+}
+
+#dados_gerais .horario_sol h2 {
+    margin-left: 5%;
+}
+
+/******Dados Geográficos******/
+
+#dados_geograficos .coordenadas, #distancia_brasilia {
+    width: 95%;
+    margin: 2% auto 0 auto;
+    font-size: calc(0.5em + 1vw);
+    color: #FFF;
+    position: relative;
+}
+
+#dados_geograficos .coordenadas {
+    height: 55%;
+}
+
+#distancia_brasilia {
+    height: 30%;
+    font-size: calc(0.5em + 1.5vw);
+}
+
+#latitude, #longitude {
+    margin-top: 2%;
+}
+
+/******************************* RODAPÉ *******************************/
+
+#rodape {
+    width: 100vw;
+    height: 7vh;
+    min-height: 7vh;
+    background-color: #0080cd;
+    color: #FFF;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+}
+
+.limpar {
+    clear: both;
+}
+
+
+/******************************* RESPONSIVIDADE *******************************/
+
+@media (min-width: 768px) and (max-width: 992px){
+    main {
+        padding-bottom: 10vh;
+    }
+
+    #entrada_cidade, #dados_clima {
+        min-width: 400px;
+        width: 70vw;
+        height: 20vh;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+    }
+
+    #entrada_cidade div {
+        padding-top: 2%;
+    }
+
+    #dados_gerais, #dados_geograficos {
+        min-width: 100px;
+        width: 33vw;
+        height: 40vh;
+    }
+
+    #dados_gerais {
+        margin: 0 2vw 0 15vw;
+    }
+
+    #dados_geograficos {
+        margin: 0 0 0 2vw;
+    }
+
+    #dados_gerais .humidade_vento, #dados_gerais .horario_sol, #dados_geograficos .coordenadas, #distancia_brasilia {
+        width: 100%;
+        height: 40%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        font-size: calc(0.5em + 0.9vw);
+        text-align: center;
+        margin: 5% 0 10% 0;
+    }
+
+    #distancia_brasilia {
+        font-size: calc((0.5em + 1.5vw));
+    }
+    
+    #dados_gerais h2 {
+        margin-top: 2%;
+    }
+    
+    #dados_gerais .horario_sol h2 {
+        margin-top: 2%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 767px){
+    main {
+        padding-bottom: 10vh;
+    }
+
+    #entrada_cidade, #dados_clima, #dados_gerais, #dados_geograficos {
+        min-width: 400px;
+        min-height: 100px;
+        width: 90vw;
+        height: 20vh;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+    }
+
+    #dados_gerais h2 {
+        margin-top: 2.5vh;
+    }
+
+    #dados_geograficos .coordenadas{
+        padding-top: 1vh;
+    }
+    
+}
+
