@@ -5,8 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Black Mesa Meteorologia</title>
+    
+    <!-- Meu CSS -->
     <link rel="stylesheet" href="./css/style.css?v=1">
-    <link rel = "icon" href = "./img/logo_blackmesa.png" type = "image/icon type">
+
+    <!-- CSS Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Icones do Google -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Icon -->
+    <link rel = "icon" href = "./img/logo_blackmesa.jpg" type = "image/icon type">
 </head>
 <body>
     <!-- Cabeçalho -->
@@ -14,10 +24,62 @@
         <h1 id="logo" alt="Logo do Site">
             BlackMesa<span> Meteorologia</span>
         </h1>
-
-        <button id="botao_help" alt="Botão de Ajuda">Help</button>
+        <button id="botao_help" class="modal-trigger" data-target="modal_ajuda" alt="Botão de Ajuda">Ajuda</button>
+        <button id="botao_historico" data-target="menu_lateral" class="sidenav-trigger show-on-large" alt="Botão de Ajuda">Histórico</button>
     </header>
     <!-- Fim Cabeçalho -->
+
+    <!-- Menu Lateral-->
+    <ul id="menu_lateral" class="sidenav">
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img src="img/azul.jpg" width="500px">
+                </div>
+                <br><br><br>
+            </div>
+        </li>
+        <li><a id="limpar_historico" class="modal-trigger" href="#modal_limpar_historico"><i class="material-icons">delete</i>Limpar Histórico</a></li>
+        <li><div class="divider"></div></li>
+        <li><a id="fechar_menu" class="sidenav-close" href="#!"><i class="material-icons">close</i>Fechar</a></li>
+        <li><div class="divider"></div></li>
+        
+        <table id="tabela_historico">
+            <thead>
+                <tr>
+                    <th>Cidade</th>
+                    <th>Temperatura</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+        </table>
+    </ul>
+    <!-- Fim Menu Lateral-->
+
+    <!-- Modal: Confirmação de Limpeza do Histórico-->
+    <div id="modal_limpar_historico" class="modal">
+        <div class="modal-content">
+            <h5>> Confirmar limpeza do histórico?</h5>
+        </div>
+        <div class="modal-footer">
+            <a id="confirmar_limpeza_historico" href="#!" class="modal-close waves-effect btn grey darken-2">Sim</a>
+            <a href="#!" class="modal-close waves-effect btn grey darken-2">Não</a>
+        </div>
+    </div>
+    <!-- Fim Modal: Confirmação de Limpeza do Histórico-->
+
+    <!-- Modal: Ajuda -->
+    <div id="modal_ajuda" class="modal">
+        <div class="modal-content">
+            <h5>> Preencha o campo abaixo com o nome de alguma cidade.</h5> 
+            <h5>> Clique no botão "Verificar" ou pressione a tecla "Enter"</h5>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect btn grey darken-2">OK</a>
+        </div>
+    </div>
+    <!-- Fim Modal: Ajuda -->
 
     <!-- Main -->
     <main>
@@ -26,41 +88,49 @@
 
             <div>
                 <input id="txt_cidade" type="text"/>
-                <button id="botao_requisicao" alt="Botão de Verificação">Verificar</button>
+                <button id="botao_requisicao" class="waves-effect waves-light btn-small grey darken-2" alt="Verificar"><i>verificar</i></button>
             </div>
         </section> <!-- Fim Cidade -->
 
         <section id="dados_clima"> <!-- Dados do Clima -->
-            <h1 id="temp_atual" alt="Temperatura atual">15°</h1>
+            <div id="temp_atual" alt="Temperatura atual">15°</div>
 
             <div class="temp_min_max">
-                <h2 id="descricao" alt="Descrição do clima">Descrição</h2>
-                <h2 id="temp_min" alt="Temperatura Mínima">Mínima:</h2>
-                <h2 id="temp_max" alt="Temperatura Máxima">Máxima:</h2>
+                <div id="descricao" alt="Descrição do clima">Descrição</div>
+                <div id="temp_min" alt="Temperatura Mínima">Mínima:</div>
+                <div id="temp_max" alt="Temperatura Máxima">Máxima:</div>
             </div>
             
             <img id="imagem_clima" src="http://openweathermap.org/img/wn/04d@2x.png" alt="Imagem: descrição visual do clima">
         </section> <!-- Fim Dados do Clima -->
         
         <section id="dados_gerais"> <!-- Dados do Gerais -->
-            <div class="horario_sol">
-                <h2 id="nascer_sol" alt="Horário do Nascer do Sol">Nascer do Sol: </h2>
-                <h2 id="por_sol" alt="Horário do Pôr do Sol">Pôr do Sol: </h2>
+            <div class="horario_sol valign-wrapper">
+                <div>
+                    <div id="nascer_sol" alt="Horário do Nascer do Sol">Nascer do Sol: </div>
+                    <div id="por_sol" alt="Horário do Pôr do Sol">Pôr do Sol: </div>
+                </div>
             </div>
 
-            <div class="humidade_vento">
-                <h2 id="humidade" alt="Humidade">Humidade:</h2>
-                <h2 id="vento" alt="Velocidade do Vento">Vento:</h2>
+            <div class="humidade_vento valign-wrapper">
+                <div>
+                    <div id="humidade" alt="Humidade">Humidade:</div>
+                    <div id="vento" alt="Velocidade do Vento">Vento:</div>
+                </div>
             </div>
         </section> <!-- Fim Dados do Gerais -->
 
         <section id="dados_geograficos"> <!-- Dados do Geográficos -->
-            <div class="coordenadas">
-                <h2 id="latitude" alt="Latitude">Latitude: </h2>
-                <h2 id="longitude" alt="Longitude">Longitude: </h2>
+            <div class="coordenadas valign-wrapper">
+                <div>
+                    <div id="latitude" alt="Latitude">Latitude: </div>
+                    <div id="longitude" alt="Longitude">Longitude: </div>
+                </div>
             </div>
             
-            <h2 id="distancia_brasilia" alt="Distância da cidade até Brasília">Distância da cidade até Brasília: </h2>
+            <div class="valign-wrapper">
+                <div id="distancia_brasilia" alt="Distância da cidade até Brasília">Distância da cidade até Brasília: </div>
+            </div>
         </section> <!-- Fim Dados do Geográficos -->
         <div class="limpar"></div>
     </main>
@@ -68,9 +138,14 @@
 
     <!-- Rodapé -->
     <footer id="rodape">
-        <h2>Todos os direitos reservados</h2>
+        <div>Todos os direitos reservados</div>
     </footer>
     <!-- Fim Rodapé -->
+
+    <!-- JS Materialize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Meu JS -->
     <script src="./js/script.js"></script>
 </body>
 </html>

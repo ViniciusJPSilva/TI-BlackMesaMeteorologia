@@ -15,6 +15,7 @@ var botaoRequisicao = document.querySelector("#botao_requisicao");
 var secao_dadosClima = document.querySelector("#dados_clima");
 var secao_dadosGerais = document.querySelector("#dados_gerais");
 var secao_dadosGeograficos = document.querySelector("#dados_geograficos");
+var nomeCidade;
 
 /**
  * Simulando click no botão com a tecla enter
@@ -29,18 +30,18 @@ document.addEventListener('keydown', function(e) {
  * Realiza algumas operações ao pressionar do botão 'botao_requisicao'.
  */
 botaoRequisicao.onclick = function(){
-    var nomeCidade = document.querySelector("#txt_cidade").value;
+    nomeCidade = document.querySelector("#txt_cidade").value;
 
     //Verifica se o campo foi preenchido
     if(nomeCidade!=null && nomeCidade!=""){
         requisicao.onloadend = function(){ //Ao fim do carregamento.
-            carregarRequisicao();
+            carregarRequisicao(true);
         }
 
         requisicao.onreadystatechange = function () { //Quando o estado da requisição é alterado
             if(this.readyState == this.DONE) { //Verifica se a requição está completamente carregada
                 if(this.status == 200) { //Verifica o status da requisição
-                    carregarRequisicao();
+                    carregarRequisicao(false);
                     return;
                 }
             }
@@ -55,13 +56,17 @@ botaoRequisicao.onclick = function(){
 /**
  * Carrega a requisição e valida a resposta da API.
  */
-function carregarRequisicao(){
+function carregarRequisicao(armazenar){
     var resposta = JSON.parse(requisicao.responseText);
             
     //Verificando se a cidade existe
-    if(resposta.cod != "404")
+    if(resposta.cod != "404"){
         atualizaLayout(resposta);
-    else
+
+        //Armazenar a pesquisa no localStorage
+        if(armazenar) 
+            armazenarLocalmente(nomeCidade.toLowerCase(), resposta.main.temp);
+    }else
         resetaLayout();
 }
 
@@ -98,7 +103,18 @@ function resetaEstilo(){
     document.querySelector("#logo").style.color = "";
     document.querySelector("#logo span").style.color = "";
     document.querySelector("#rodape").style.color = ""
-    document.querySelector("#cabecalho button").style.background = "";
+    document.querySelector("#botao_historico").style.background = "";
+    document.querySelector("#botao_help").style.background = "";
+
+    //Background do botão de requisicão
+    document.querySelector('#botao_requisicao').classList.remove('blue');
+    document.querySelector('#botao_requisicao').classList.remove('red');
+    document.querySelector('#botao_requisicao').classList.add('grey');
+
+    document.querySelector(".sidenav").style.backgroundColor = "#FFF";
+
+    var img = document.querySelector(".background img");
+    img.setAttribute('src', 'img/azul.jpg');
 }
 
 /**
@@ -150,6 +166,7 @@ function atualizaLayout(resposta){
 
     /*Altera o Plano de Fundo*/
     alterarPlanoDeFundo(temperatura);
+
 }//Função atualizaLayout()
 
 /**
@@ -166,10 +183,17 @@ function timestampToHora(tstamp, fusoHorario){
     var minutos = (horario % 3600) / 60; //Obtendo os minutos.
 
     //Padronizando o formato (dois caracteres).
-    hora = (hora <= 9) ? '0' + hora:hora; 
-    minutos = (minutos <= 9) ? '0' + minutos:minutos;
+    hora = padronizadorDoisDigitos(hora);
+    minutos = padronizadorDoisDigitos(minutos);
 
     return hora + ":" + minutos; //Retorno
+}
+
+/**
+ * Recebe um valor inteiro entre 0 e 99 e retorna o mesmo com dois digitos.
+ */
+function padronizadorDoisDigitos(valor){
+    return (valor <= 9) ? '0' + valor:valor;
 }
 
 /**
@@ -251,7 +275,16 @@ function alterarPlanoDeFundo(temperatura){
                 secao_dadosGeograficos.style.backgroundColor = "#00BFFF";
 
                 document.querySelector("#rodape").style.color = "#000"
-                document.querySelector("#cabecalho button").style.background = "#00BFFF";
+                document.querySelector("#botao_historico").style.background = "#00BFFF";
+                document.querySelector("#botao_help").style.background = "#00BFFF";
+
+                document.querySelector(".sidenav").style.backgroundColor = "#6ADAFF";
+                
+                document.querySelector('#botao_requisicao').classList.remove('grey');
+                document.querySelector('#botao_requisicao').classList.add('blue');
+
+                var img = document.querySelector(".background img");
+                img.setAttribute('src', 'img/neve.jpeg');
             }
         }else{
             if(temperatura <= 40){
@@ -272,17 +305,122 @@ function alterarPlanoDeFundo(temperatura){
                 document.querySelector("#logo").style.color = "#FFF";
                 document.querySelector("#logo span").style.color = "#FF8C00";
                 document.querySelector("#rodape").style.color = "#FF8C00"
-                document.querySelector("#cabecalho button").style.background = "#FF8C00";
+                document.querySelector("#botao_historico").style.background = "#FF8C00";
+                document.querySelector("#botao_help").style.background = "#FF8C00";
+
+                document.querySelector('#botao_requisicao').classList.remove('grey');
+                document.querySelector('#botao_requisicao').classList.add('red');
+
+                document.querySelector(".sidenav").style.backgroundColor = "#FFB65C";
+
+                var img = document.querySelector(".background img");
+                img.setAttribute('src', 'img/sol.jpg');
             }
         }
     }
 }//função alterarPlanoDeFundo()
 
 /**
- * Apresenta um pop-up de ajuda.
+ *  Armazena dados no local Storage.
+ *  > Nome da cidade.
+ *  > Temperatura.
+ *  > Data da pesquisa.
+ *  > Hora da pesquisa.
  */
-var botaoAjuda = document.querySelector("#botao_help");
-botaoAjuda.onclick = function(){
-    alert("> Preencha o campo abaixo com o nome de alguma cidade.\n> Clique no botão \"Verificar\" ou pressione a tecla \"Enter\".");
+function armazenarLocalmente(nome, temperatura){
+    if(suportaLocalStorage){
+        var data = new Date();
+
+        var dataAtual = padronizadorDoisDigitos(data.getDate()) + '/' + padronizadorDoisDigitos((data.getMonth()+1)) + '/' + data.getFullYear();
+        var horaAtual = padronizadorDoisDigitos(data.getHours()) + ':' + padronizadorDoisDigitos(data.getMinutes()) + ':' + padronizadorDoisDigitos(data.getSeconds());
+
+        nome = nome[0].toUpperCase() + nome.substr(1);
+        var novoItem = {'cidade' : nome, 'temperatura' : temperatura + ' °C', 'data' : dataAtual, 'hora' : horaAtual};
+        localStorage.setItem(localStorage.length + 1, JSON.stringify(novoItem))
+    }
 }
 
+/**
+ * Verifica se o navegador do usuário suporta localStorage.
+ */
+function suportaLocalStorage(){
+    try{
+        return 'localStorage' in window && window['localStorage'] !== null;
+    }catch (e){
+        return false;
+    }
+}
+
+/**
+ * Manipula o pop up (modal) de ajuda.
+ */
+var popUpAjuda = document.querySelectorAll('.modal');
+var intanciasPopUpAjuda = M.Modal.init(popUpAjuda);
+
+/**
+ * Manipula o menu lateral (histórico).
+ */
+var menuLateral = document.querySelectorAll('.sidenav');
+var instanciasMenuLateral = M.Sidenav.init(menuLateral);
+
+/**
+ * Insere linhas na tabela de histórico.
+ */
+function inserirLinhaNoHistorico(dados){
+    var tabela = document.querySelector("#tabela_historico");
+
+    var numLinhas = tabela.rows.length;
+    var numColunas = tabela.rows[numLinhas - 1].cells.length;
+    var novaLinha = tabela.insertRow(numLinhas);
+
+    for (var col = 0; col < numColunas; col++) {
+        newCell = novaLinha.insertCell(col);
+
+        switch(col){
+            case 0:
+                newCell.innerHTML =  dados.cidade;
+                break;
+            case 1:
+                newCell.innerHTML =  dados.temperatura;
+                break;
+            case 2:
+                newCell.innerHTML =  dados.data;
+                break;
+            case 3:
+                newCell.innerHTML =  dados.hora;
+                break; 
+        }
+    }
+}
+
+/**
+ * Limpa os dados da tabela do historico.
+ */
+function limparTabelaHistorico(){
+    var tabela = document.querySelector("#tabela_historico");
+    var rowCount = tabela.rows.length;
+    for (var x=rowCount-1; x>0; x--) {
+        tabela.deleteRow(x);
+    }
+}
+
+/**
+ * Limpa o localStorage.
+ */
+document.querySelector("#confirmar_limpeza_historico").onclick = function(){
+    localStorage.clear();
+    limparTabelaHistorico();
+}
+
+/**
+ * Abre o menu lateral com o historico de pesquisas.
+ */
+document.querySelector("#botao_historico").onclick = function(){
+    limparTabelaHistorico();
+
+    if(localStorage.length > 0 && suportaLocalStorage()){
+        for(var i = 1; i <= localStorage.length; i++){
+            inserirLinhaNoHistorico(JSON.parse(localStorage[i]));
+        }
+    }
+};

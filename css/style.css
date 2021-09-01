@@ -36,7 +36,7 @@ main, header, footer {
     color: #FFF;
 }
 
-#cabecalho button {
+#botao_help, #botao_historico {
     background: none;
     border-color: #FFF;
     color: #FFF;
@@ -48,17 +48,29 @@ main, header, footer {
     float: right;
 }
 
-#cabecalho button:hover {
+#botao_help:hover, #botao_historico:hover {
     background: #FFFFFF;
     color: #0080cd;
 }
 
-#logo, #cabecalho button {
+#logo, #botao_help, #botao_historico {
     position: relative;
     top: 50%;
     margin-top: calc(13vh / 2 * -1 / 2);
 }
 
+/* Menu Lateral */
+#limpar_historico {
+    font-size: 1.3em;
+}
+
+.sidenav {
+    width: 500px !important;
+}
+
+#fechar_menu {
+    display: none;
+}
 /******************************* CORPO *******************************/
 #entrada_cidade, #dados_geograficos, #dados_clima, #dados_gerais {
     min-height: 200px;
@@ -69,6 +81,7 @@ main, header, footer {
     background-color: #0080cd;
     position: relative;
     float: left;
+    overflow: hidden;
 }
 
 #entrada_cidade, #dados_geograficos {
@@ -102,6 +115,7 @@ main, header, footer {
 #txt_cidade {
     width: 70%;
     height: 75%;
+    background-color: #FFF;
     font-size: calc(1em + 0.5vw);
     float: left;
 }
@@ -109,10 +123,11 @@ main, header, footer {
 #botao_requisicao {
     width:25%;
     height: 80%;
-    background-color: #4E4E4E;
-    color: #FFF;
-    font-size: calc(0.5em + 1vw);
     float: right;
+}
+
+#botao_requisicao *{
+    font-size: calc(0.5em + 0.5vw);
 }
 
 /******Dados do Clima******/
@@ -137,17 +152,17 @@ main, header, footer {
 
 #imagem_clima {
     width: 25%;
-    left: 37%;
+    left: 35%;
 }
 
 #dados_clima .temp_min_max {
     width: fit-content;
-    font-size: calc(0.5em + 0.9vw);
     left: 65%;
     text-align: center;
 }
 
-#dados_clima .temp_min_max h2 {
+#dados_clima .temp_min_max div {
+    font-size: calc(0.5em + 2vw);
     margin: 7% 0;
 }
 
@@ -159,24 +174,21 @@ main, header, footer {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
-    font-size: calc(0.5em + 1vw);
+    font-size: calc(0.5em + 2vw);
+}
+
+#dados_gerais .horario_sol div, #dados_gerais .humidade_vento div {
+    width: fit-content;
 }
 
 #dados_gerais .horario_sol {
     width: 55%;    
+    left: 2%;
 }
 
 #dados_gerais .humidade_vento {
-    left: 55%;
+    left: 60%;
     text-align: center;
-}
-
-#dados_gerais h2 {
-    margin-top: 4vh;
-}
-
-#dados_gerais .horario_sol h2 {
-    margin-left: 5%;
 }
 
 /******Dados Geográficos******/
@@ -184,23 +196,19 @@ main, header, footer {
 #dados_geograficos .coordenadas, #distancia_brasilia {
     width: 95%;
     margin: 2% auto 0 auto;
-    font-size: calc(0.5em + 1vw);
+    font-size: calc(0.5em + 1.5vw);
     color: #FFF;
     position: relative;
 }
 
 #dados_geograficos .coordenadas {
-    height: 55%;
+    height: 50%;
 }
 
 #distancia_brasilia {
-    height: 30%;
-    font-size: calc(0.5em + 1.5vw);
+    height: 35%;
 }
 
-#latitude, #longitude {
-    margin-top: 2%;
-}
 
 /******************************* RODAPÉ *******************************/
 
@@ -213,6 +221,7 @@ main, header, footer {
     text-align: center;
     position: fixed;
     bottom: 0;
+    font-size: calc(0.5em + 1.5vw);
 }
 
 .limpar {
@@ -261,22 +270,19 @@ main, header, footer {
         top: 0;
         left: 0;
         transform: none;
-        font-size: calc(0.5em + 0.9vw);
+        font-size: calc(0.5em + 1.5vw);
         text-align: center;
         margin: 5% 0 10% 0;
     }
+    
+    #dados_geograficos .coordenadas div{
+        width: fit-content;
+        margin: 0 auto;
+    }
 
-    #distancia_brasilia {
-        font-size: calc((0.5em + 1.5vw));
-    }
-    
-    #dados_gerais h2 {
-        margin-top: 2%;
-    }
-    
-    #dados_gerais .horario_sol h2 {
-        margin-top: 2%;
-        margin-left: 0;
+    #dados_gerais .horario_sol div, #dados_gerais .humidade_vento div {
+        width: fit-content;
+        margin: 0 auto ;
     }
 }
 
@@ -288,11 +294,20 @@ main, header, footer {
     #entrada_cidade, #dados_clima, #dados_gerais, #dados_geograficos {
         min-width: 400px;
         min-height: 100px;
-        width: 90vw;
+        width: 95vw;
         height: 20vh;
         margin-left: auto;
         margin-right: auto;
         float: none;
+    }
+
+    #entrada_cidade div {
+        padding: 0;
+    }
+
+    #entrada_cidade h1 {
+        margin-top: 2%;
+        margin-bottom: 1%;
     }
 
     #dados_gerais h2 {
@@ -303,5 +318,15 @@ main, header, footer {
         padding-top: 1vh;
     }
     
+    #fechar_menu {
+        display: block;
+    }
+
+    #botao_help, #botao_historico {
+        margin: 0 5px;
+        position: relative;
+        top: 50%;
+        margin-top: calc(13vh / 2 * -1 / 2);
+    }
 }
 
