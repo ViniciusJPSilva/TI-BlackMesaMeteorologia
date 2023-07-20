@@ -287,7 +287,7 @@ function alterarPlanoDeFundo(temperatura){
                 img.setAttribute('src', 'img/neve.jpeg');
             }
         }else{
-            if(temperatura <= 40){
+            if(temperatura <= 30){
                 document.body.style.backgroundColor = "#F00";
             }else{
                 //Estilo personalizado para temperaturas acima de 40°C.
